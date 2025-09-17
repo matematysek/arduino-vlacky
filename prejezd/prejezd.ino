@@ -32,7 +32,7 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(10) == HIGH && state == STATE_CLOSING || digitalRead(10) == HIGH && state == STATE_PREWARN) {
+  if (digitalRead(10) == LOW && state == STATE_CLOSING || digitalRead(10) == LOW && state == STATE_PREWARN) {
     Serial.println("RESET -> STATE_OPEN_ACTIVE");
     sranky.write(0);       // Zavory nahoru
     servoState = 0;
@@ -62,7 +62,7 @@ void loop() {
       sranky.write(0);
       servoState = 0;
       blinkLunobila();
-      if (digitalRead(10) == LOW) {
+      if (digitalRead(10) == HIGH) {
         Serial.println("Rucni spusteni -> predzvaneni");   
         digitalWrite(2, LOW);
         digitalWrite(3, LOW);
@@ -97,7 +97,7 @@ void loop() {
 
     case STATE_CLOSED:
       blinkCervene();
-      if (digitalRead(10) == HIGH) {
+      if (digitalRead(10) == LOW) {
         Serial.println("Rucni odblokovani -> zavory nahoru");
         digitalWrite(5, HIGH);
         digitalWrite(4, LOW);
